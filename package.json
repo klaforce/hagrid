@@ -1,0 +1,22 @@
+{
+  "name": "hagrid",
+  "version": "1.0.0",
+  "description": "Genetic algorithm to optimize niffler project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klaforce/hagrid.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/klaforce/hagrid/issues"
+  },
+  "homepage": "https://github.com/klaforce/hagrid#readme",
+  "dependencies": {
+    "yargs": "^15.0.2"
+  }
+}
