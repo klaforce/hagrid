@@ -1,9 +1,10 @@
 const Chromosome = require("./chromosome");
+const rn = require("random-number");
 
 class Hagrid {
     constructor(params) {
         this.params = params;
-        this.population = new Map();
+        this.population = new Array();
 
         //this is a set of parameters to send to niffler
         //each item has a min and max value that the population
@@ -23,9 +24,58 @@ class Hagrid {
 
     createPopulation() {
         //create initial population by randomly manipulating the niffler variables
-        for (let i = 0; i < this.params.initialpopulation; i++) {
-            this.population.set(i, new Chromosome(this.nifflerParams));
+        for (let i = 0; i < this.params.populationsize; i++) {
+            this.population.push(new Chromosome(this.nifflerParams));
         }
+    }
+
+    crossover() {
+        //select two random parents and crossover the genes. Store the child in the population
+        let parentOneIndex = rn({
+            min: 0,
+            max: this.params.populationsize - 1,
+            integer: true
+        });
+        let parentTwoIndex = rn({
+            min: 0,
+            max: this.params.populationsize - 1,
+            integer: true
+        });
+
+        let child = this.population[parentOneIndex].crossover(
+            this.population[parentTwoIndex]
+        );
+        this.population.push(child);
+    }
+
+    mutation() {
+        let parentOneIndex = rn({
+            min: 0,
+            max: this.params.populationsize,
+            integer: true
+        });
+
+        let child = this.population[parentOneIndex].mutate();
+        this.population.push(child);
+    }
+
+    evolve() {
+        //TODO add a loop here
+        for (let i = 0; i < this.params.populationsize; i++) {
+            this.crossover();
+
+            if (rn() < 0.05) {
+                this.mutation();
+            }
+        }
+
+        //regen population for next generation
+        //sort by the highest fitness and select the top five
+        let newPopulation = this.population.sort((a, b) =>
+            a.fitness() > b.fitness() ? 1 : -1
+        );
+
+        this.population = newPopulation.slice(0, this.params.populationsize);
     }
 
     execute() {
@@ -34,7 +84,9 @@ class Hagrid {
             this.evolve();
         }
 
-        return this.population;
+        return this.population.sort((a, b) =>
+            a.fitness() > b.fitness() ? 1 : -1
+        )[0];
     }
 }
 
