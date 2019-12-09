@@ -72,7 +72,7 @@ class Hagrid {
         //regen population for next generation
         //sort by the highest fitness and select the top five
         let newPopulation = this.population.sort((a, b) =>
-            a.fitness() > b.fitness() ? 1 : -1
+            a.fitness() < b.fitness() ? 1 : -1
         );
 
         this.population = newPopulation.slice(0, this.params.populationsize);
@@ -85,7 +85,7 @@ class Hagrid {
         }
 
         return this.population.sort((a, b) =>
-            a.fitness() > b.fitness() ? 1 : -1
+            a.fitness() < b.fitness() ? 1 : -1
         )[0];
     }
 }

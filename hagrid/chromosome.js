@@ -42,13 +42,16 @@ class Chromosome {
             "--results-as-json",
             "--width 32",
             "--height 32",
-            `node ../niffler/NifflerBot.js --halitemax=${this.chromosome[0].convert()} --maxships=${this.chromosome[1].convert()} --capacity=${this.chromosome[2].convert()} --recreate=${this.chromosome[3].convert()} --fitnessformaxships=${this.chromosome[4].convert()} --fitnessfordistancetodropoff=${this.chromosome[5].convert()} --halitecellmodifier=${this.chromosome[6].convert()} --modifierturnsships=${this.chromosome[7].convert()}`
+            this.getCommand()
         ]);
 
         let jsonResults = JSON.parse(result);
         this.fitnessValue = jsonResults.stats[0].score;
-        console.log(this.fitnessValue);
         return this.fitnessValue;
+    }
+
+    getCommand() {
+        return `node ../niffler/NifflerBot.js --halitemax=${this.chromosome[0].convert()} --maxships=${this.chromosome[1].convert()} --capacity=${this.chromosome[2].convert()} --recreate=${this.chromosome[3].convert()} --fitnessformaxships=${this.chromosome[4].convert()} --fitnessfordistancetodropoff=${this.chromosome[5].convert()} --halitecellmodifier=${this.chromosome[6].convert()} --modifierturnsships=${this.chromosome[7].convert()}`;
     }
 
     crossover(mate) {

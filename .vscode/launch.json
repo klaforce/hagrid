@@ -13,7 +13,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}\\index.js",
-            "args": ["--populationsize=500", "--generations=500"]
+            "args": ["--populationsize=2", "--generations=1"]
         }
     ]
 }
