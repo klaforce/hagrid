@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/klaforce/hagrid#readme",
   "dependencies": {
+    "random-number": "0.0.9",
     "yargs": "^15.0.2"
   }
 }
