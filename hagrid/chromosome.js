@@ -1,5 +1,6 @@
 const Sequence = require("./sequence");
 const rn = require("random-number");
+const sh = require("child_process").execFileSync;
 
 class Chromosome {
     constructor(nifflerParams) {
@@ -34,7 +35,19 @@ class Chromosome {
         if (this.fitnessValue > -1000) return this.fitnessValue;
 
         //run the niffler appliction to get fitness of this chromosome
-        this.fitnessValue = 100;
+        let result = sh("../niffler/halite.exe", [
+            "--no-replay",
+            "--no-logs",
+            "-vvv",
+            "--results-as-json",
+            "--width 32",
+            "--height 32",
+            `node ../niffler/NifflerBot.js --halitemax=${this.chromosome[0].convert()} --maxships=${this.chromosome[1].convert()} --capacity=${this.chromosome[2].convert()} --recreate=${this.chromosome[3].convert()} --fitnessformaxships=${this.chromosome[4].convert()} --fitnessfordistancetodropoff=${this.chromosome[5].convert()} --halitecellmodifier=${this.chromosome[6].convert()} --modifierturnsships=${this.chromosome[7].convert()}`
+        ]);
+
+        let jsonResults = JSON.parse(result);
+        this.fitnessValue = jsonResults.stats[0].score;
+        console.log(this.fitnessValue);
         return this.fitnessValue;
     }
 

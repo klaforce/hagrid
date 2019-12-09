@@ -20,6 +20,10 @@ class Sequence {
             this.value.push(parseInt(binaryRep[i]));
         }
     }
+
+    convert() {
+        return parseInt(this.value.join(""), 2);
+    }
 }
 
 module.exports = Sequence;
